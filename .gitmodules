@@ -1,0 +1,6 @@
+[submodule "data-app-gui"]
+	path = data-app-gui
+	url = https://github.com/AliShenanigans/data-app-gui.git
+[submodule "data-app-nlp"]
+	path = data-app-nlp
+	url = https://github.com/AliShenanigans/data-app-nlp.git
