@@ -1,6 +1,3 @@
-version: "3.7"
-
-
 services:
   postgres:
     image: postgres:alpine
@@ -12,6 +9,21 @@ services:
       - "5433:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+  node:
+    depends_on: 
+      - postgres
+    build: 
+      dockerfile: dockerfile
+      context: .
+    network_mode: host # container thinks it's my local machine
+    volumes:
+      - .:/workspaces/root
+    command: >
+      sh -c " cd /workspaces/root/data-app-api && 
+      npm run db:init &&
+      npm start "
+      
+
 
 volumes:
-  postgres-data:
+  postgres-data: 
