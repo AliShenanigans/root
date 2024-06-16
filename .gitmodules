@@ -4,3 +4,6 @@
 [submodule "data-app-nlp"]
 	path = data-app-nlp
 	url = https://github.com/AliShenanigans/data-app-nlp.git
+[submodule "data-app-api"]
+	path = data-app-api
+	url = https://github.com/AliShenanigans/data-app-api.git
