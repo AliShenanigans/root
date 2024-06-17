@@ -13,7 +13,7 @@ services:
     depends_on: 
       - postgres
     build: 
-      dockerfile: dockerfile
+      dockerfile: ./dockerfiles/api/dockerfile
       context: .
     network_mode: host # container thinks it's my local machine
     volumes:
@@ -22,8 +22,17 @@ services:
       sh -c " cd /workspaces/root/data-app-api && 
       npm run db:init &&
       npm start "
-      
-
+  python:
+    depends_on: 
+      - postgres 
+      - node
+    build: 
+      dockerfile: ./dockerfiles/nlp/dockerfile
+      context: .
+    network_mode: host # container thinks it's my local machine
+    volumes:
+      - .:/workspaces/root
+    command: sh -c "python3 --version"
 
 volumes:
   postgres-data: 
