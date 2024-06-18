@@ -1,2 +1,4 @@
 FROM python:3
 RUN apt-get update
+# COPY ../../data-app-nlp/requirements.txt . 
+# RUN pip install -r requirements.txt

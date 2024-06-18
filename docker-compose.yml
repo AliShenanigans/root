@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: pg
       POSTGRES_DB: data
     ports:
-      - "5433:5432"
+      - "5433:5432" #<host-port (local uses to get to db)>:<container-port>
     volumes:
       - postgres-data:/var/lib/postgresql/data
   node:
@@ -15,7 +15,8 @@ services:
     build: 
       dockerfile: ./dockerfiles/api/dockerfile
       context: .
-    network_mode: host # container thinks it's my local machine
+    ports:
+      - "3031:3031" 
     volumes:
       - .:/workspaces/root
     command: >
@@ -29,7 +30,8 @@ services:
     build: 
       dockerfile: ./dockerfiles/nlp/dockerfile
       context: .
-    network_mode: host # container thinks it's my local machine
+    ports:
+      - "8086:8086"
     volumes:
       - .:/workspaces/root
     command: sh -c "python3 --version"
