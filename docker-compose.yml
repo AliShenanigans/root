@@ -34,7 +34,8 @@ services:
       - "8086:8086"
     volumes:
       - .:/workspaces/root
-    command: sh -c "python3 --version"
+    command: sh -c " cd /workspaces/root/data-app-nlp &&
+      python -u -m src"
 
 volumes:
   postgres-data: 
