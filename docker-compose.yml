@@ -6,7 +6,9 @@ services:
       POSTGRES_PASSWORD: pg
       POSTGRES_DB: data
     ports:
-      - "5433:5432" #<host-port (local uses to get to db)>:<container-port>
+      - "5432:5432"
+    expose:
+      - "5432" 
     volumes:
       - postgres-data:/var/lib/postgresql/data
   node:
@@ -18,24 +20,26 @@ services:
     ports:
       - "3031:3031" 
     volumes:
-      - .:/workspaces/root
+      - ./:/workspaces
     command: >
-      sh -c " cd /workspaces/root/data-app-api && 
+      sh -c " 
+      cd /workspaces/data-app-api && 
+      npm i &&
       npm run db:init &&
-      npm start "
-  python:
-    depends_on: 
-      - postgres 
-      - node
-    build: 
-      dockerfile: ./dockerfiles/nlp/dockerfile
-      context: .
-    ports:
-      - "8086:8086"
-    volumes:
-      - .:/workspaces/root
-    command: sh -c " cd /workspaces/root/data-app-nlp &&
-      python -u -m src"
+      npm start"
+  # python:
+  #   depends_on: 
+  #     - postgres 
+  #     - node
+  #   build: 
+  #     dockerfile: ./dockerfiles/nlp/dockerfile
+  #     context: .
+  #   ports:
+  #     - "8086:8086"
+  #   volumes:
+  #     - .:/workspaces/root
+  #   command: sh -c " cd /workspaces/root/data-app-nlp &&
+  #     python -u -m src"
 
 volumes:
   postgres-data: 
