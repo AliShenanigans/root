@@ -7,8 +7,6 @@ services:
       POSTGRES_DB: data
     ports:
       - "5432:5432"
-    expose:
-      - "5432" 
     volumes:
       - postgres-data:/var/lib/postgresql/data
   node:
@@ -27,19 +25,22 @@ services:
       npm i &&
       npm run db:init &&
       npm start"
-  # python:
-  #   depends_on: 
-  #     - postgres 
-  #     - node
-  #   build: 
-  #     dockerfile: ./dockerfiles/nlp/dockerfile
-  #     context: .
-  #   ports:
-  #     - "8086:8086"
-  #   volumes:
-  #     - .:/workspaces/root
-  #   command: sh -c " cd /workspaces/root/data-app-nlp &&
-  #     python -u -m src"
+  python:
+    depends_on: 
+      - postgres 
+      - node
+    build: 
+      dockerfile: ./dockerfiles/nlp/dockerfile
+      context: .
+    ports:
+      - "8086:8086"
+    volumes:
+     - ./:/workspaces
+    command: sh -c " cd /workspaces/data-app-nlp && 
+      pwd &&
+      pip install --upgrade pip &&
+      pip install -r requirements.txt &&
+      python -u -m src"
 
 volumes:
   postgres-data: 
