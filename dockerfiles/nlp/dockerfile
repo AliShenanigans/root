@@ -3,3 +3,9 @@ RUN apt-get update
 COPY ../../data-app-nlp/requirements.txt . 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+# Update the package lists and install iputils-ping and iproute2
+#  So i can use ping and check ip commands from inside the container
+RUN apt-get update && apt-get install -y \
+    iputils-ping \
+    iproute2 \
+ && rm -rf /var/lib/apt/lists/*

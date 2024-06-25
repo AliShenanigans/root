@@ -1,3 +1,9 @@
 FROM node:latest
 RUN apt-get update
 ENV DOCKER_CONTAINER=true
+# Update the package lists and install iputils-ping and iproute2
+#  So i can use ping and check ip commands from inside the container
+RUN apt-get update && apt-get install -y \
+    iputils-ping \
+    iproute2 \
+ && rm -rf /var/lib/apt/lists/*
